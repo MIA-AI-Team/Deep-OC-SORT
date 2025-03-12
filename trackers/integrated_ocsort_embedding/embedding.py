@@ -42,7 +42,7 @@ class EmbeddingComputer:
             h, w = image.shape[2:]
 
         bbox = np.array(bbox)
-        bbox = bbox.astype(np.int)
+        bbox = bbox.astype(np.int64)
         if bbox[0] < 0 or bbox[1] < 0 or bbox[2] > w or bbox[3] > h:
             # Faulty Patch Correction
             bbox[0] = np.clip(bbox[0], 0, None)

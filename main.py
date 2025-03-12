@@ -15,7 +15,7 @@ from trackers import integrated_ocsort_embedding as tracker_module
 
 def get_main_args():
     parser = tracker_module.args.make_parser()
-    parser.add_argument("--dataset", type=str, default="mot17")
+    parser.add_argument("--dataset", type=str, default="mot20")
     parser.add_argument("--result_folder", type=str, default="results/trackers/")
     parser.add_argument("--test_dataset", action="store_true")
     parser.add_argument("--exp_name", type=str, default="exp1")
@@ -44,6 +44,9 @@ def get_main_args():
     parser.add_argument("--aw_param", type=float, default=0.5)
     parser.add_argument("--new_kf_off", action="store_true")
     parser.add_argument("--grid_off", action="store_true")
+    parser.add_argument("--detector", type=str, default="yoloV11")
+    parser.add_argument("--conf_thresh", type=float, default=0.7)
+
     args = parser.parse_args()
 
     if args.dataset == "mot17":
@@ -62,27 +65,34 @@ def main():
     # Set dataset and detector
     args = get_main_args()
 
+
     if args.dataset == "mot17":
-        if args.test_dataset:
+        if args.detector == "yoloV11":
+            detector_path = "external/weights/yoloV11_best.pt"
+        elif args.test_dataset:
             detector_path = "external/weights/bytetrack_x_mot17.pth.tar"
         else:
             detector_path = "external/weights/bytetrack_ablation.pth.tar"
         size = (800, 1440)
     elif args.dataset == "mot20":
-        if args.test_dataset:
+        if args.detector == "yoloV11":
+            detector_path = "external/weights/yoloV11_best.pt"
+            size = (800, 1440)
+        elif args.test_dataset:
             detector_path = "external/weights/bytetrack_x_mot20.tar"
-            size = (896, 1600)
         else:
             # Just use the mot17 test model as the ablation model for 20
             detector_path = "external/weights/bytetrack_x_mot17.pth.tar"
             size = (800, 1440)
     elif args.dataset == "dance":
         # Same model for test and validation
-        detector_path = "external/weights/bytetrack_dance_model.pth.tar"
+        detector_path = "external/weights/yoloV11_best.pt"
+        # detector_path = "external/weights/bytetrack_dance_model.pth.tar"
         size = (800, 1440)
     else:
         raise RuntimeError("Need to update paths for detector for extra datasets.")
-    det = detector.Detector("yolox", detector_path, args.dataset)
+    # det = detector.Detector("yolox", detector_path, args.dataset)
+    det = detector.Detector("yoloV11", detector_path, args.dataset, args.conf_thresh)
     loader = dataset.get_mot_loader(args.dataset, args.test_dataset, size=size)
 
     # Set up tracker

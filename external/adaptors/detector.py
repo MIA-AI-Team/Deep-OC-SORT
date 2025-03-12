@@ -5,12 +5,12 @@ import pickle
 import torch
 
 from external.adaptors import yolox_adaptor
-
+from external.adaptors import yolo11_adaptor
 
 class Detector(torch.nn.Module):
-    K_MODELS = {"yolox"}
+    K_MODELS = {"yolox", "yoloV11"}
 
-    def __init__(self, model_type, path, dataset):
+    def __init__(self, model_type, path, dataset, conf_thresh):
         super().__init__()
         if model_type not in self.K_MODELS:
             raise RuntimeError(f"{model_type} detector not supported")
@@ -18,6 +18,7 @@ class Detector(torch.nn.Module):
         self.model_type = model_type
         self.path = path
         self.dataset = dataset
+        self.conf = conf_thresh
         self.model = None
 
         os.makedirs("./cache", exist_ok=True)
@@ -35,6 +36,8 @@ class Detector(torch.nn.Module):
         """Wait until needed."""
         if self.model_type == "yolox":
             self.model = yolox_adaptor.get_model(self.path, self.dataset)
+        elif self.model_type == "yoloV11":
+            self.model = yolo11_adaptor.get_model(self.conf, self.path)
 
     def forward(self, batch, tag=None):
         if tag in self.cache:

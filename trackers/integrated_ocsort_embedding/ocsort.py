@@ -367,7 +367,8 @@ class OCSort(object):
         KalmanBoxTracker.count = 0
 
         self.embedder = EmbeddingComputer(kwargs["args"].dataset, kwargs["args"].test_dataset, grid_off)
-        self.cmc = CMCComputer()
+        if not cmc_off:
+            self.cmc = CMCComputer()
         self.embedding_off = embedding_off
         self.cmc_off = cmc_off
         self.aw_off = aw_off
@@ -526,5 +527,6 @@ class OCSort(object):
         return np.empty((0, 5))
 
     def dump_cache(self):
-        self.cmc.dump_cache()
+        if not self.cmc_off:
+            self.cmc.dump_cache()
         self.embedder.dump_cache()
