@@ -4,3 +4,4 @@ deepOCenv/
 /external/weights/
 **/__pycache__/
 /cache/
+results/trackers/

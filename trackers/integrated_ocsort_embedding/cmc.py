@@ -53,10 +53,10 @@ class CMCComputer:
                 tag = f_name.replace("GMC-", "").replace(".txt", "") + "-FRCNN"
                 f_name = os.path.join("./cache/cmc_files/MOT17_ablation/", f_name)
                 self.file_names[tag] = f_name
-            for f_name in os.listdir("./cache/cmc_files/MOT20_ablation/"):
-                tag = f_name.replace("GMC-", "").replace(".txt", "")
-                f_name = os.path.join("./cache/cmc_files/MOT20_ablation/", f_name)
-                self.file_names[tag] = f_name
+            # for f_name in os.listdir("./cache/cmc_files/MOT20_ablation/"):
+            #     tag = f_name.replace("GMC-", "").replace(".txt", "")
+            #     f_name = os.path.join("./cache/cmc_files/MOT20_ablation/", f_name)
+            #     self.file_names[tag] = f_name
 
             # All the test file names
             for f_name in os.listdir("./cache/cmc_files/MOTChallenge/"):

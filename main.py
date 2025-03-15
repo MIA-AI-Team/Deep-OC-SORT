@@ -45,7 +45,6 @@ def get_main_args():
     parser.add_argument("--new_kf_off", action="store_true")
     parser.add_argument("--grid_off", action="store_true")
     parser.add_argument("--detector", type=str, default="yoloV11")
-    parser.add_argument("--conf_thresh", type=float, default=0.7)
 
     args = parser.parse_args()
 
@@ -76,14 +75,16 @@ def main():
         size = (800, 1440)
     elif args.dataset == "mot20":
         if args.detector == "yoloV11":
+            print("MOT20 YOLO11")
             detector_path = "external/weights/yoloV11_best.pt"
             size = (800, 1440)
         elif args.test_dataset:
+            print("MOT20 YOLOX")
             detector_path = "external/weights/bytetrack_x_mot20.tar"
         else:
             # Just use the mot17 test model as the ablation model for 20
-            detector_path = "external/weights/bytetrack_x_mot17.pth.tar"
-            size = (800, 1440)
+            detector_path = "external/weights/bytetrack_x_mot20.tar"
+        size = (800, 1440)
     elif args.dataset == "dance":
         # Same model for test and validation
         detector_path = "external/weights/yoloV11_best.pt"
@@ -91,8 +92,10 @@ def main():
         size = (800, 1440)
     else:
         raise RuntimeError("Need to update paths for detector for extra datasets.")
-    # det = detector.Detector("yolox", detector_path, args.dataset)
-    det = detector.Detector("yoloV11", detector_path, args.dataset, args.conf_thresh)
+    if args.detector == "yolox":
+        det = detector.Detector("yolox", detector_path, args.dataset)
+    elif args.detector == "yoloV11":
+        det = detector.Detector(model_type="yoloV11", path=detector_path,dataset=args.dataset, conf_thresh=args.conf, iou=args.nms)
     loader = dataset.get_mot_loader(args.dataset, args.test_dataset, size=size)
 
     # Set up tracker
@@ -145,6 +148,7 @@ def main():
         pred = det(img, tag)
         if pred is None:
             continue
+        print(pred.shape)
         # Nx5 of (x1, y1, x2, y2, ID)
         targets = tracker.update(pred, img, np_img[0].numpy(), tag)
         tlwhs, ids = utils.filter_targets(targets, args.aspect_ratio_thresh, args.min_box_area)

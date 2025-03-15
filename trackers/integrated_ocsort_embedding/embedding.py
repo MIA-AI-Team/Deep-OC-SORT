@@ -165,6 +165,7 @@ class EmbeddingComputer:
                 return self._get_general_model()
         elif self.dataset == "mot20":
             if self.test_dataset:
+                print("Embedding 20")
                 path = "external/weights/mot20_sbs_S50.pth"
             else:
                 return self._get_general_model()
