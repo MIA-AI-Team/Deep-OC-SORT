@@ -148,7 +148,6 @@ def main():
         pred = det(img, tag)
         if pred is None:
             continue
-        print(pred.shape)
         # Nx5 of (x1, y1, x2, y2, ID)
         targets = tracker.update(pred, img, np_img[0].numpy(), tag)
         tlwhs, ids = utils.filter_targets(targets, args.aspect_ratio_thresh, args.min_box_area)

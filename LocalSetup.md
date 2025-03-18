@@ -51,7 +51,7 @@ mv results/trackers/MOT20-val results/trackers/MOT20-test
 ```
 
 ```
-python3 external/TrackEval/scripts/run_mot_challenge.py --SPLIT_TO_EVAL test --METRICS HOTA Identity --TRACKERS_TO_EVAL ${exp}\_post --GT_FOLDER results/gt/ --TRACKERS_FOLDER results/trackers/ --BENCHMARK MOT20
+python3 external/TrackEval/scripts/run_mot_challenge.py --SPLIT_TO_EVAL test --METRICS HOTA --TRACKERS_TO_EVAL ${exp}\_post --GT_FOLDER results/gt/ --TRACKERS_FOLDER results/trackers/ --BENCHMARK MOT20
 ```
 
 **For another test**
@@ -72,17 +72,19 @@ Confidence 0.1, NMS 0.7, Class Agnostics False, CMC OFF
 
 #### Results
 
-YOLOX 17 Embedding 17 - 63.415 -
-YOLOX 17 Embedding 20 - 63.808 -
-YOLOX 20 Embedding 17 - 74.941 - 69.667
+YOLOX 17 Embedding 17 - 63.415 -  
+YOLOX 17 Embedding 20 - 63.808 -  
+YOLOX 20 Embedding 17 - 74.941 - 69.667  
 YOLOX 20 Embedding 20 - 75.456 - 70.739
 
 ### YoloV11 Experiments
 
-YOLOV11 (No Test det) Embedding 17 45.459 - 43.952
+YOLOV11 (No Test det) Embedding 17 45.459 - 43.952  
 YOLOV11 (No Test det) Embedding 20 46.608 - 46.006
 
 Confidence 0.7
 
-YOLOV11 (No Test det) Embedding 17 45.459 - 43.952
+YOLOV11 (No Test det) Embedding 17 45.459 - 43.952  
 YOLOV11 (No Test det) Embedding 20 49.777 - 49.295
+
+YOLOV11 (No Test det) Embedding 20 50.259 - 50.26 (track_thresh 0.6)

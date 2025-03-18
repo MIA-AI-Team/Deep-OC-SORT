@@ -50,8 +50,8 @@ def get_model(conf=0.1, iou_thresh=0.7, weights_path="external/weights/yoloV11_b
     Loads the pretrained YOLOv11 model from Ultralytics and wraps it for inference.
     """
     model = YOLO(weights_path)
-    model.fuse()
-    model = model.half()
+    # model.fuse()
+    # model = model.half()
     model = PostModel(model=model, conf=conf, iou=iou_thresh)
     model.cuda()
     return model
