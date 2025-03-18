@@ -3,7 +3,9 @@
 import pdb
 
 files = {
-    "MOT20-01/gt/gt.txt": (216, 429),
+    "MOT20-02/gt/gt.txt": (1393, 2782),
+    "MOT20-03/gt/gt.txt": (1204, 2405),
+    "MOT20-05/gt/gt.txt": (1659, 3315),
 }
 
 

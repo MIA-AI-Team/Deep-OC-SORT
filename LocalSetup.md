@@ -88,3 +88,19 @@ YOLOV11 (No Test det) Embedding 17 45.459 - 43.952
 YOLOV11 (No Test det) Embedding 20 49.777 - 49.295
 
 YOLOV11 (No Test det) Embedding 20 50.259 - 50.26 (track_thresh 0.6)
+
+### Hyperparameters Experiments
+
+- Defaults:
+
+  - YoloV11 (XL)
+  - embedding mot17 weights
+
+  - Observations:  
+    Don't modify confidence let it be 0.1 instead modify track_thresh
+
+- Expriments
+
+  - @cmc_off @nms 0.7 @aw_off @new_kf_off @grid_off @track_thresh 0.7 ---> best with 49.57
+  - @cmc_off @track_thresh 0.7 @aw_off @new_kf_off @grid_off @nms 0.5 ---> best with 51.132
+  - @track_thresh 0.7 @aw_off @new_kf_off @grid_off @nms 0.5 (cmc on) ---> best with 51.795
