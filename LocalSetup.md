@@ -99,7 +99,7 @@ YOLOV11 (No Test det) Embedding 20 50.259 - 50.26 (track_thresh 0.6)
   - Observations:  
     Don't modify confidence let it be 0.1 instead modify track_thresh
 
-- Expriments
+- Expriments On YoloV11 with Embedding MOT17
 
   - @cmc_off @nms 0.7 @aw_off @new_kf_off @grid_off @track_thresh 0.7 ---> best with 49.57
   - @cmc_off @track_thresh 0.7 @aw_off @new_kf_off @grid_off @nms 0.5 ---> best with 51.132
